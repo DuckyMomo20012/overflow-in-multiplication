@@ -13,7 +13,7 @@ main:
 
 	pdflatex -output-directory=$(OUT_DIR) main.tex
 
-	cp ./References/references.bib $(OUT_DIR)/References/ && cd $(OUT_DIR) && bibtex ./main
+# cp ./References/references.bib $(OUT_DIR)/References/ && cd $(OUT_DIR) && bibtex ./main
 
 	pdflatex -output-directory=$(OUT_DIR) ./main.tex
 
