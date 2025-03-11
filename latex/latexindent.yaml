@@ -1,0 +1,12 @@
+lookForAlignDelims:
+  longtable:
+    multiColumnGrouping: 1
+  xltabular:
+    multiColumnGrouping: 1
+
+modifyLineBreaks:
+  textWrapOptions:
+    columns: 80
+    when: before
+    blocksEndBefore:
+      other: \\begin\{|\\end\{|\\hline|\\cline

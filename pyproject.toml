@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "overflow-in-multiplication"
+version = "0.0.0"
+description = "A simple python template"
+package-mode = false
+
+[tool.poe.tasks]
+lint = "ruff check --fix"
+pretty = "ruff format"
+test = "echo You are running test command"
+deploy = "echo You are running deploy command"
+export = "poetry export -f requirements.txt --output requirements.txt"
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+
+[tool.ruff]
+extend-include = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+environs = "^14.0.0"
+numpy = "^2.2.3"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "^0.33.0"
+mypy = "^1.10.1"
+pre-commit = "^4.0.0"
+ruff = "^0.9.0"
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.9"
+poetry-plugin-shell = ">=1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
