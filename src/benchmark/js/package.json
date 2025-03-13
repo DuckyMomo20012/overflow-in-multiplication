@@ -1,0 +1,12 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "node benchmark.js"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.1.2",
+    "decimal.js": "^10.5.0"
+  }
+}
