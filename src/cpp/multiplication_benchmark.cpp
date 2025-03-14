@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include <chrono>
-#include <algorithm>
 
 template<typename T> T linearMultiply(T x, long long n) {
     T result = 0;
@@ -68,7 +67,7 @@ template<typename T> struct TestCase {
     T expectedResult;
 };
 
-template<typename T> void runBenchmark(const std::string& typeName) {
+template<typename T> std::vector< BenchmarkResult<T> > runBenchmark(const std::string& typeName, std::ofstream& csvFile) {
     // For header printing
     std::cout << std::fixed << std::setprecision(8);
     std::cout << "\nBenchmarking " << typeName << " multiplication methods\n";
@@ -77,8 +76,8 @@ template<typename T> void runBenchmark(const std::string& typeName) {
     const T x = 0.1;
     std::vector< TestCase<T> > testCases;
     long long curr = 1;
-    // Create test cases for powers of 10 from 10 to 10^10
-    for (long long exp = 1; exp <= 10; exp++) {
+    // Create test cases for powers of 10 from 10 to 10^11
+    for (long long exp = 1; exp <= 11; exp++) {
         TestCase<T> tc;
         tc.expectedResult = curr;
         curr = curr * 10;
@@ -87,8 +86,6 @@ template<typename T> void runBenchmark(const std::string& typeName) {
         testCases.push_back(tc);
     }
     
-
-   
     // Initialize counters for summary
     int linearBetterCount = 0;
     int fastMultiplyBetterCount = 0;
@@ -129,15 +126,28 @@ template<typename T> void runBenchmark(const std::string& typeName) {
         }
         
         // Print results
-        std::cout << std::left << std::setw(15) << tc.n 
-                  << std::setw(20) << result.linearResult 
-                  << std::setw(20) << result.fastMultiplyResult 
-                  << std::setw(20) << result.expectedResult 
-                  << std::setw(15) << result.linearError 
-                  << std::setw(15) << result.fastMultiplyError 
-                  << std::setw(15) << result.linearTime 
-                  << std::setw(15) << result.fastMultiplyTime 
-                  << winner << std::endl;
+        std::cout << std::fixed << std::setprecision(10) 
+                << std::left << std::setw(15) << tc.n 
+                << std::setw(20) << result.linearResult 
+                << std::setw(20) << result.fastMultiplyResult 
+                << std::setw(20) << result.expectedResult 
+                << std::setprecision(10)  // Higher precision for error values
+                << std::setw(15) << result.linearError 
+                << std::setw(15) << result.fastMultiplyError 
+                << std::setprecision(6)   // Different precision for time values
+                << std::setw(15) << result.linearTime 
+                << std::setw(15) << result.fastMultiplyTime 
+                << winner << std::endl;
+        // Write to CSV
+        csvFile << typeName << "," << tc.n << "," 
+                << result.linearResult << "," 
+                << result.fastMultiplyResult << "," 
+                << result.expectedResult << "," 
+                << result.linearError << "," 
+                << result.fastMultiplyError << "," 
+                << result.linearTime << "," 
+                << result.fastMultiplyTime << "," 
+                << winner << "\n";
         
         totalLinearTime += result.linearTime;
         totalFastMultiplyTime += result.fastMultiplyTime;
@@ -163,7 +173,6 @@ template<typename T> void runBenchmark(const std::string& typeName) {
     std::cout << "Fast better: " << fastMultiplyPercentage << "%" << std::endl;
     std::cout << "Equal accuracy: " << equalPercentage << "%" << std::endl;
     
-
     // Performance comparison
     std::cout << "\nPERFORMANCE COMPARISON:" << std::endl;
     std::cout << "Total Linear execution time: " << totalLinearTime << " seconds" << std::endl;
@@ -201,14 +210,131 @@ template<typename T> void runBenchmark(const std::string& typeName) {
         std::cout << "1. Both methods provided similar levels of accuracy overall" << std::endl;
     }
     
-
     std::cout << "\n3. Performance Cost:" << std::endl;
     std::cout << "   - Linear operations are " << speedRatio << "x " << speedDescription << " Fast operations" << std::endl;
+    
+    return results;
+}
+
+void compareFloatAndDouble(const std::vector< BenchmarkResult<float> >& floatResults, 
+                           const std::vector< BenchmarkResult<double> >& doubleResults) {
+    
+    std::cout << "\n\n" << std::string(100, '=') << std::endl;
+    std::cout << "PRECISION COMPARISON BETWEEN FLOAT AND DOUBLE" << std::endl;
+    std::cout << std::string(100, '=') << std::endl;
+    
+    std::cout << "\nComparing linear multiplication method:" << std::endl;
+    std::cout << std::left << std::setw(15) << "n" 
+              << std::setw(20) << "Float Error" 
+              << std::setw(20) << "Double Error" 
+              << std::setw(20) << "Improvement Factor" 
+              << std::endl;
+    std::cout << std::string(75, '-') << std::endl;
+    
+    for (size_t i = 0; i < floatResults.size(); i++) {
+        double improvementFactor = 0;
+        if (floatResults[i].linearError > 0) {
+            improvementFactor = floatResults[i].linearError / doubleResults[i].linearError;
+        }
+        
+        std::cout << std::left << std::setw(15) << i+1
+                  << std::setw(20) << floatResults[i].linearError
+                  << std::setw(20) << doubleResults[i].linearError
+                  << std::setw(20) << improvementFactor
+                  << std::endl;
+    }
+    
+    std::cout << "\nComparing fast multiplication method:" << std::endl;
+    std::cout << std::left << std::setw(15) << "n" 
+              << std::setw(20) << "Float Error" 
+              << std::setw(20) << "Double Error" 
+              << std::setw(20) << "Improvement Factor" 
+              << std::endl;
+    std::cout << std::string(75, '-') << std::endl;
+    
+    for (size_t i = 0; i < floatResults.size(); i++) {
+        double improvementFactor = 0;
+        if (floatResults[i].fastMultiplyError > 0) {
+            improvementFactor = floatResults[i].fastMultiplyError / doubleResults[i].fastMultiplyError;
+        }
+        
+        std::cout << std::left << std::setw(15) << i+1
+                  << std::setw(20) << floatResults[i].fastMultiplyError
+                  << std::setw(20) << doubleResults[i].fastMultiplyError
+                  << std::setw(20) << improvementFactor
+                  << std::endl;
+    }
+    
+    // Calculate average improvement factors
+    double avgLinearImprovement = 0;
+    double avgFastImprovement = 0;
+    int validLinearCount = 0;
+    int validFastCount = 0;
+    
+    for (size_t i = 0; i < floatResults.size(); i++) {
+        if (floatResults[i].linearError > 0 && doubleResults[i].linearError > 0) {
+            avgLinearImprovement += (floatResults[i].linearError / doubleResults[i].linearError);
+            validLinearCount++;
+        }
+        
+        if (floatResults[i].fastMultiplyError > 0 && doubleResults[i].fastMultiplyError > 0) {
+            avgFastImprovement += (floatResults[i].fastMultiplyError / doubleResults[i].fastMultiplyError);
+            validFastCount++;
+        }
+    }
+    
+    if (validLinearCount > 0) {
+        avgLinearImprovement /= validLinearCount;
+    }
+    
+    if (validFastCount > 0) {
+        avgFastImprovement /= validFastCount;
+    }
+    
+    std::cout << "\nSUMMARY:" << std::endl;
+    std::cout << "- Average precision improvement with double vs float (linear method): " 
+              << avgLinearImprovement << "x" << std::endl;
+    std::cout << "- Average precision improvement with double vs float (fast method): " 
+              << avgFastImprovement << "x" << std::endl;
+    
+    std::cout << "\nCONCLUSION:" << std::endl;
+    if (avgLinearImprovement > 1.1) {
+        std::cout << "- For the linear method, double precision provides significantly better accuracy than float"
+                  << " (average " << avgLinearImprovement << "x improvement)" << std::endl;
+    } else {
+        std::cout << "- For the linear method, double precision and float provide similar levels of accuracy" << std::endl;
+    }
+    
+    if (avgFastImprovement > 1.1) {
+        std::cout << "- For the fast method, double precision provides significantly better accuracy than float"
+                  << " (average " << avgFastImprovement << "x improvement)" << std::endl;
+    } else {
+        std::cout << "- For the fast method, double precision and float provide similar levels of accuracy" << std::endl;
+    }
 }
 
 int main() {
+    // Open CSV file for writing
+    std::ofstream csvFile("benchmark_results.csv");
+    // Set precision and fixed notation for the CSV file
+    csvFile.setf(std::ios::fixed, std::ios::floatfield);
+    csvFile.precision(10);
+    // Write CSV header
+    csvFile << "Type,n,Linear_Result,Fast_Result,Expected_Result,Linear_Error,Fast_Error,Linear_Time,Fast_Time,Winner\n";
+    
     // Run benchmark for float (32-bit)
-    runBenchmark<float>("float");
+    auto floatResults = runBenchmark<float>("float", csvFile);
+    
     // Run benchmark for double (64-bit)
-    runBenchmark<double>("double");
+    auto doubleResults = runBenchmark<double>("double", csvFile);
+    
+    // Compare precision between float and double
+    compareFloatAndDouble(floatResults, doubleResults);
+    
+    // Close CSV file
+    csvFile.close();
+    
+    std::cout << "Results have been written to benchmark_results.csv" << std::endl;
+    
+    return 0;
 }
