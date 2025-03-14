@@ -1,0 +1,100 @@
+{
+  "big_decimal": {
+    "result": "121932631356500531591068431581771069347203169112635269",
+    "expected": "121932631356500531591068431581771069347203169112635269",
+    "time": 51413914,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "big_100_decimal": {
+    "result": "121932631356500531591068431581771069347203169112635269",
+    "expected": "121932631356500531591068431581771069347203169112635269",
+    "time": 55666575,
+    "iterations": 100,
+    "isMatch": true
+  },
+  "n12_decimal": {
+    "result": "100000000000",
+    "expected": "100000000000",
+    "time": 40892335,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "n12_bignumber": {
+    "result": "100000000000",
+    "expected": "100000000000",
+    "time": 48576954,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "n13_decimal": {
+    "result": "1000000000000",
+    "expected": "1000000000000",
+    "time": 37997280,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "n13_bignumber": {
+    "result": "1000000000000",
+    "expected": "1000000000000",
+    "time": 43516384,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "n14_decimal": {
+    "result": "10000000000000",
+    "expected": "10000000000000",
+    "time": 44423679,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "n14_bignumber": {
+    "result": "10000000000000",
+    "expected": "10000000000000",
+    "time": 42745167,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "n24_decimal": {
+    "result": "100000000000000000000000",
+    "expected": "100000000000000000000000",
+    "time": 41586753,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "n24_bignumber": {
+    "result": "100000000000000000000000",
+    "expected": "100000000000000000000000",
+    "time": 42428983,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "n25_decimal": {
+    "result": "1000000000000000000000000",
+    "expected": "1000000000000000000000000",
+    "time": 42958950,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "n25_bignumber": {
+    "result": "1000000000000000000000000",
+    "expected": "1000000000000000000000000",
+    "time": 44191744,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "n26_decimal": {
+    "result": "10000000000000000000000000",
+    "expected": "10000000000000000000000000",
+    "time": 45891136,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  "n26_bignumber": {
+    "result": "10000000000000000000000000",
+    "expected": "10000000000000000000000000",
+    "time": 47085581,
+    "iterations": 100000,
+    "isMatch": true
+  }
+}
