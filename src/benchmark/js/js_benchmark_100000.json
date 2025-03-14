@@ -1,99 +1,43 @@
 {
-  "big_decimal": {
+  "js_big_decimal": {
     "result": "121932631356500531591068431581771069347203169112635269",
     "expected": "121932631356500531591068431581771069347203169112635269",
-    "time": 51413914,
+    "time": 52633507,
     "iterations": 100000,
     "isMatch": true
   },
-  "big_100_decimal": {
+  "js_big_100_decimal": {
     "result": "121932631356500531591068431581771069347203169112635269",
     "expected": "121932631356500531591068431581771069347203169112635269",
-    "time": 55666575,
+    "time": 55885239,
     "iterations": 100,
     "isMatch": true
   },
-  "n12_decimal": {
-    "result": "100000000000",
-    "expected": "100000000000",
-    "time": 40892335,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n12_bignumber": {
-    "result": "100000000000",
-    "expected": "100000000000",
-    "time": 48576954,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n13_decimal": {
-    "result": "1000000000000",
-    "expected": "1000000000000",
-    "time": 37997280,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n13_bignumber": {
-    "result": "1000000000000",
-    "expected": "1000000000000",
-    "time": 43516384,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n14_decimal": {
+  "js_n14_decimal": {
     "result": "10000000000000",
     "expected": "10000000000000",
-    "time": 44423679,
+    "time": 45879304,
     "iterations": 100000,
     "isMatch": true
   },
-  "n14_bignumber": {
+  "js_n14_bignumber": {
     "result": "10000000000000",
     "expected": "10000000000000",
-    "time": 42745167,
+    "time": 50408970,
     "iterations": 100000,
     "isMatch": true
   },
-  "n24_decimal": {
-    "result": "100000000000000000000000",
-    "expected": "100000000000000000000000",
-    "time": 41586753,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n24_bignumber": {
-    "result": "100000000000000000000000",
-    "expected": "100000000000000000000000",
-    "time": 42428983,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n25_decimal": {
-    "result": "1000000000000000000000000",
-    "expected": "1000000000000000000000000",
-    "time": 42958950,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n25_bignumber": {
-    "result": "1000000000000000000000000",
-    "expected": "1000000000000000000000000",
-    "time": 44191744,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n26_decimal": {
+  "js_n26_decimal": {
     "result": "10000000000000000000000000",
     "expected": "10000000000000000000000000",
-    "time": 45891136,
+    "time": 50600406,
     "iterations": 100000,
     "isMatch": true
   },
-  "n26_bignumber": {
+  "js_n26_bignumber": {
     "result": "10000000000000000000000000",
     "expected": "10000000000000000000000000",
-    "time": 47085581,
+    "time": 52045068,
     "iterations": 100000,
     "isMatch": true
   }

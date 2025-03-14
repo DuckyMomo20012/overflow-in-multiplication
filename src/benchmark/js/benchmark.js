@@ -51,54 +51,34 @@ const bigNumberTestSuite = (x, n, expected, iter = ITERATIONS) => {
 };
 
 const testcases = {
-  big_decimal: decimalTestSuite(
+  js_big_decimal: decimalTestSuite(
     "987654321987654321987654321",
     "123456789123456789123456789",
     "121932631356500531591068431581771069347203169112635269"
   ),
-  big_100_decimal: decimalTestSuite(
+  js_big_100_decimal: decimalTestSuite(
     "987654321987654321987654321",
     "123456789123456789123456789",
     "121932631356500531591068431581771069347203169112635269",
     100
   ),
-  big_decimal: bigNumberTestSuite(
+  js_big_decimal: bigNumberTestSuite(
     "987654321987654321987654321",
     "123456789123456789123456789",
     "121932631356500531591068431581771069347203169112635269"
   ),
-  n12_decimal: decimalTestSuite("0.1", "1000000000000", "100000000000"),
-  n12_bignumber: bigNumberTestSuite("0.1", "1000000000000", "100000000000"),
-  n13_decimal: decimalTestSuite("0.1", "10000000000000", "1000000000000"),
-  n13_bignumber: bigNumberTestSuite("0.1", "10000000000000", "1000000000000"),
-  n14_decimal: decimalTestSuite("0.1", "100000000000000", "10000000000000"),
-  n14_bignumber: bigNumberTestSuite("0.1", "100000000000000", "10000000000000"),
-  n24_decimal: decimalTestSuite(
+  js_n14_decimal: decimalTestSuite("0.1", "100000000000000", "10000000000000"),
+  js_n14_bignumber: bigNumberTestSuite(
     "0.1",
-    "1000000000000000000000000",
-    "100000000000000000000000"
+    "100000000000000",
+    "10000000000000"
   ),
-  n24_bignumber: bigNumberTestSuite(
-    "0.1",
-    "1000000000000000000000000",
-    "100000000000000000000000"
-  ),
-  n25_decimal: decimalTestSuite(
-    "0.1",
-    "10000000000000000000000000",
-    "1000000000000000000000000"
-  ),
-  n25_bignumber: bigNumberTestSuite(
-    "0.1",
-    "10000000000000000000000000",
-    "1000000000000000000000000"
-  ),
-  n26_decimal: decimalTestSuite(
+  js_n26_decimal: decimalTestSuite(
     "0.1",
     "100000000000000000000000000",
     "10000000000000000000000000"
   ),
-  n26_bignumber: bigNumberTestSuite(
+  js_n26_bignumber: bigNumberTestSuite(
     "0.1",
     "100000000000000000000000000",
     "10000000000000000000000000"

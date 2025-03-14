@@ -1,162 +1,78 @@
 {
-  "big_decimal": {
+  "py_big_decimal": {
     "result": "121932631356500531591068431581771069347203169112635269",
     "expected": "121932631356500531591068431581771069347203169112635269",
-    "time": 62274380,
+    "time": 61963274,
     "iterations": 100000,
     "isMatch": true
   },
-  "big_100_decimal": {
+  "py_big_100_decimal": {
     "result": "121932631356500531591068431581771069347203169112635269",
     "expected": "121932631356500531591068431581771069347203169112635269",
-    "time": 62292222,
+    "time": 61768131,
     "iterations": 100000,
     "isMatch": true
   },
-  "big_mpmath": {
+  "py_big_mpmath": {
     "result": "121932631356500531591068431581771069347203169112635269.0",
     "expected": "121932631356500531591068431581771069347203169112635269.0",
-    "time": 352771869,
+    "time": 339417403,
     "iterations": 100000,
     "isMatch": true
   },
-  "big_100_mpmath": {
+  "py_big_100_mpmath": {
     "result": "121932631356500531591068431581771069347203169112635269.0",
     "expected": "121932631356500531591068431581771069347203169112635269.0",
-    "time": 417589073,
+    "time": 398571644,
     "iterations": 100000,
     "isMatch": true
   },
-  "big_gmpy2": {
+  "py_big_gmpy2": {
     "result": "121932631356500531591068431581771069347203169112635269.0",
     "expected": "121932631356500531591068431581771069347203169112635269.0",
-    "time": 256528465,
+    "time": 253242087,
     "iterations": 100000,
     "isMatch": true
   },
-  "n12_decimal": {
-    "result": "100000000000",
-    "expected": "100000000000",
-    "time": 53182598,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n12_mpmath": {
-    "result": "100000000000.0",
-    "expected": "100000000000.0",
-    "time": 371255050,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n12_gmpy2": {
-    "result": "100000000000.0",
-    "expected": "100000000000.0",
-    "time": 217418870,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n13_decimal": {
-    "result": "1000000000000",
-    "expected": "1000000000000",
-    "time": 53338923,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n13_mpmath": {
-    "result": "1000000000000.0",
-    "expected": "1000000000000.0",
-    "time": 367738573,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n13_gmpy2": {
-    "result": "1000000000000.0",
-    "expected": "1000000000000.0",
-    "time": 211929562,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n14_decimal": {
+  "py_n14_decimal": {
     "result": "10000000000000",
     "expected": "10000000000000",
-    "time": 53386141,
+    "time": 52455794,
     "iterations": 100000,
     "isMatch": true
   },
-  "n14_mpmath": {
+  "py_n14_mpmath": {
     "result": "10000000000000.0",
     "expected": "10000000000000.0",
-    "time": 378772077,
+    "time": 344414752,
     "iterations": 100000,
     "isMatch": true
   },
-  "n14_gmpy2": {
+  "py_n14_gmpy2": {
     "result": "10000000000000.0",
     "expected": "10000000000000.0",
-    "time": 213206389,
+    "time": 216176218,
     "iterations": 100000,
     "isMatch": true
   },
-  "n24_decimal": {
-    "result": "100000000000000000000000",
-    "expected": "100000000000000000000000",
-    "time": 54995851,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n24_mpmath": {
-    "result": "100000000000000000000000.0",
-    "expected": "100000000000000000000000.0",
-    "time": 367566100,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n24_gmpy2": {
-    "result": "100000000000000000000000.0",
-    "expected": "100000000000000000000000.0",
-    "time": 238205012,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n25_decimal": {
-    "result": "1000000000000000000000000",
-    "expected": "1000000000000000000000000",
-    "time": 55634718,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n25_mpmath": {
-    "result": "1000000000000000000000000.0",
-    "expected": "1000000000000000000000000.0",
-    "time": 371975548,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n25_gmpy2": {
-    "result": "1000000000000000000000000.0",
-    "expected": "1000000000000000000000000.0",
-    "time": 228456468,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n26_decimal": {
+  "py_n26_decimal": {
     "result": "10000000000000000000000000",
     "expected": "10000000000000000000000000",
-    "time": 56125815,
+    "time": 55651034,
     "iterations": 100000,
     "isMatch": true
   },
-  "n26_mpmath": {
+  "py_n26_mpmath": {
     "result": "10000000000000000000000000.0",
     "expected": "10000000000000000000000000.0",
-    "time": 380994962,
+    "time": 353908376,
     "iterations": 100000,
     "isMatch": true
   },
-  "n26_gmpy2": {
+  "py_n26_gmpy2": {
     "result": "10000000000000000000000000.0",
     "expected": "10000000000000000000000000.0",
-    "time": 229553990,
+    "time": 227774070,
     "iterations": 100000,
     "isMatch": true
   }

@@ -1,106 +1,50 @@
 {
-  "big_100_eric": {
+  "go_big_100_eric": {
     "result": "121932631356500531591068431581771069347203169112635269",
     "expected": "121932631356500531591068431581771069347203169112635269",
-    "time": 76847889,
+    "time": 67678950,
     "iterations": 100000,
     "isMatch": true
   },
-  "big_eric": {
+  "go_big_eric": {
     "result": "121932631356500531591068431581771069347203169112635269",
     "expected": "121932631356500531591068431581771069347203169112635269",
-    "time": 68196310,
+    "time": 67238467,
     "iterations": 100000,
     "isMatch": true
   },
-  "big_shop": {
+  "go_big_shop": {
     "result": "121932631356500531591068431581771069347203169112635269",
     "expected": "121932631356500531591068431581771069347203169112635269",
-    "time": 56680451,
+    "time": 56619429,
     "iterations": 100000,
     "isMatch": true
   },
-  "n12_eric": {
-    "result": "100000000000.0",
-    "expected": "100000000000.0",
-    "time": 51191893,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n12_shop": {
-    "result": "100000000000",
-    "expected": "100000000000",
-    "time": 47757937,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n13_eric": {
-    "result": "1000000000000.0",
-    "expected": "1000000000000.0",
-    "time": 37508099,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n13_shop": {
-    "result": "1000000000000",
-    "expected": "1000000000000",
-    "time": 28963533,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n14_eric": {
+  "go_n14_eric": {
     "result": "10000000000000.0",
     "expected": "10000000000000.0",
-    "time": 37656538,
+    "time": 37565066,
     "iterations": 100000,
     "isMatch": true
   },
-  "n14_shop": {
+  "go_n14_shop": {
     "result": "10000000000000",
     "expected": "10000000000000",
-    "time": 28736206,
+    "time": 29660603,
     "iterations": 100000,
     "isMatch": true
   },
-  "n24_eric": {
-    "result": "100000000000000000000000.0",
-    "expected": "100000000000000000000000.0",
-    "time": 58196446,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n24_shop": {
-    "result": "100000000000000000000000",
-    "expected": "100000000000000000000000",
-    "time": 40454387,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n25_eric": {
-    "result": "1000000000000000000000000.0",
-    "expected": "1000000000000000000000000.0",
-    "time": 57978272,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n25_shop": {
-    "result": "1000000000000000000000000",
-    "expected": "1000000000000000000000000",
-    "time": 40482136,
-    "iterations": 100000,
-    "isMatch": true
-  },
-  "n26_eric": {
+  "go_n26_eric": {
     "result": "10000000000000000000000000.0",
     "expected": "10000000000000000000000000.0",
-    "time": 58098968,
+    "time": 59230553,
     "iterations": 100000,
     "isMatch": true
   },
-  "n26_shop": {
+  "go_n26_shop": {
     "result": "10000000000000000000000000",
     "expected": "10000000000000000000000000",
-    "time": 40385058,
+    "time": 40537773,
     "iterations": 100000,
     "isMatch": true
   }
