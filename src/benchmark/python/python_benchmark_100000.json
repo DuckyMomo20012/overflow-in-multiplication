@@ -1,79 +1,90 @@
-{
-  "py_big_decimal": {
+[
+  {
+    "label": "py_big_decimal",
     "result": "121932631356500531591068431581771069347203169112635269",
     "expected": "121932631356500531591068431581771069347203169112635269",
-    "time": 61963274,
+    "time": 61689016,
     "iterations": 100000,
     "isMatch": true
   },
-  "py_big_100_decimal": {
+  {
+    "label": "py_big_100_decimal",
     "result": "121932631356500531591068431581771069347203169112635269",
     "expected": "121932631356500531591068431581771069347203169112635269",
-    "time": 61768131,
+    "time": 62094754,
     "iterations": 100000,
     "isMatch": true
   },
-  "py_big_mpmath": {
+  {
+    "label": "py_big_mpmath",
     "result": "121932631356500531591068431581771069347203169112635269.0",
     "expected": "121932631356500531591068431581771069347203169112635269.0",
-    "time": 339417403,
+    "time": 337631178,
     "iterations": 100000,
     "isMatch": true
   },
-  "py_big_100_mpmath": {
+  {
+    "label": "py_big_100_mpmath",
     "result": "121932631356500531591068431581771069347203169112635269.0",
     "expected": "121932631356500531591068431581771069347203169112635269.0",
-    "time": 398571644,
+    "time": 383996731,
     "iterations": 100000,
     "isMatch": true
   },
-  "py_big_gmpy2": {
+  {
+    "label": "py_big_gmpy2",
     "result": "121932631356500531591068431581771069347203169112635269.0",
     "expected": "121932631356500531591068431581771069347203169112635269.0",
-    "time": 253242087,
+    "time": 253224113,
     "iterations": 100000,
     "isMatch": true
   },
-  "py_n14_decimal": {
+  {
+    "label": "py_n14_decimal",
     "result": "10000000000000",
     "expected": "10000000000000",
-    "time": 52455794,
+    "time": 52940285,
     "iterations": 100000,
     "isMatch": true
   },
-  "py_n14_mpmath": {
+  {
+    "label": "py_n14_mpmath",
     "result": "10000000000000.0",
     "expected": "10000000000000.0",
-    "time": 344414752,
+    "time": 331620845,
     "iterations": 100000,
     "isMatch": true
   },
-  "py_n14_gmpy2": {
+  {
+    "label": "py_n14_gmpy2",
     "result": "10000000000000.0",
     "expected": "10000000000000.0",
-    "time": 216176218,
+    "time": 214883979,
     "iterations": 100000,
     "isMatch": true
   },
-  "py_n26_decimal": {
+  {
+    "label": "py_n26_decimal",
     "result": "10000000000000000000000000",
     "expected": "10000000000000000000000000",
-    "time": 55651034,
+    "time": 55838038,
     "iterations": 100000,
     "isMatch": true
   },
-  "py_n26_mpmath": {
+  {
+    "label": "py_n26_mpmath",
     "result": "10000000000000000000000000.0",
     "expected": "10000000000000000000000000.0",
-    "time": 353908376,
+    "time": 337825220,
     "iterations": 100000,
     "isMatch": true
   },
-  "py_n26_gmpy2": {
+  {
+    "label": "py_n26_gmpy2",
     "result": "10000000000000000000000000.0",
     "expected": "10000000000000000000000000.0",
-    "time": 227774070,
+    "time": 230225550,
     "iterations": 100000,
     "isMatch": true
   }
-}
+]

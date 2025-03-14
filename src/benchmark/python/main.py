@@ -14,12 +14,13 @@ def benchmark(func, iter = ITERATIONS):
     end = perf_counter_ns()
     return end - start  # Single run
 
-def test(input, expected, func, iter = ITERATIONS):
+def test(label, input, expected, func, iter = ITERATIONS):
     res = func(input)
     if res != expected:
         print("Error: expected " + expected + " but got " + res)
 
     return {
+        "label": label,
         "result": res,
         "expected": expected,
         "time": benchmark(lambda: func(input), iter),
@@ -41,7 +42,7 @@ def gmpy2_mult(input):
     res = (input["x"] * input["n"])
     return "{:.1f}".format(res)
 
-def decimalTestSuite(x, n, expected, iter = ITERATIONS, precision_conf = None):
+def decimalTestSuite(label, x, n, expected, iter = ITERATIONS, precision_conf = None):
     if (precision_conf is None):
         precision_conf = len(expected)
 
@@ -52,9 +53,9 @@ def decimalTestSuite(x, n, expected, iter = ITERATIONS, precision_conf = None):
         "x": decimal.Decimal(x),
         "n": decimal.Decimal(n)
     }
-    return test(input, expected, decimal_mult, iter)
+    return test(label, input, expected, decimal_mult, iter)
 
-def mpmathTestSuite(x, n, expected, iter = ITERATIONS, precision_conf = None):
+def mpmathTestSuite(label, x, n, expected, iter = ITERATIONS, precision_conf = None):
     if (precision_conf is None):
         precision_conf = len(expected)
 
@@ -65,9 +66,9 @@ def mpmathTestSuite(x, n, expected, iter = ITERATIONS, precision_conf = None):
         "x": mp.mpf(x),
         "n": mp.mpf(n)
     }
-    return test(input, expected, mpmath_mult, iter)
+    return test(label, input, expected, mpmath_mult, iter)
 
-def gmpy2TestSuite(x, n, expected, iter = ITERATIONS, precision_conf = 53):
+def gmpy2TestSuite(label, x, n, expected, iter = ITERATIONS, precision_conf = 53):
     gmpy2Ctx = gmpy2.get_context() # type: ignore
     gmpy2Ctx.precision = precision_conf # Set precision for gpmy2
 
@@ -75,22 +76,22 @@ def gmpy2TestSuite(x, n, expected, iter = ITERATIONS, precision_conf = 53):
         "x": gmpy2.mpfr(x), # type: ignore
         "n": gmpy2.mpfr(n) # type: ignore
     }
-    return test(input, expected, gmpy2_mult, iter)
+    return test(label, input, expected, gmpy2_mult, iter)
 
 # Run benchmarks
-testcases = {
-    "py_big_decimal": decimalTestSuite("987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269"),
-    "py_big_100_decimal": decimalTestSuite("987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269", precision_conf=100),
-    "py_big_mpmath": mpmathTestSuite("987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269.0"),
-    "py_big_100_mpmath": mpmathTestSuite("987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269.0", precision_conf=100),
-    "py_big_gmpy2": gmpy2TestSuite("987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269.0", precision_conf=256),
-    "py_n14_decimal": decimalTestSuite("0.1", "100000000000000", "10000000000000"),
-    "py_n14_mpmath": mpmathTestSuite("0.1", "100000000000000", "10000000000000.0"),
-    "py_n14_gmpy2": gmpy2TestSuite("0.1", "100000000000000", "10000000000000.0", precision_conf=128),
-    "py_n26_decimal": decimalTestSuite("0.1", "100000000000000000000000000", "10000000000000000000000000"),
-    "py_n26_mpmath": mpmathTestSuite("0.1", "100000000000000000000000000", "10000000000000000000000000.0"),
-    "py_n26_gmpy2": gmpy2TestSuite("0.1", "100000000000000000000000000", "10000000000000000000000000.0", precision_conf=128),
-}
+testcases = [
+    decimalTestSuite("py_big_decimal", "987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269"),
+    decimalTestSuite("py_big_100_decimal", "987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269", precision_conf=100),
+    mpmathTestSuite("py_big_mpmath", "987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269.0"),
+    mpmathTestSuite("py_big_100_mpmath", "987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269.0", precision_conf=100),
+    gmpy2TestSuite("py_big_gmpy2", "987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269.0", precision_conf=256),
+    decimalTestSuite("py_n14_decimal", "0.1", "100000000000000", "10000000000000"),
+    mpmathTestSuite("py_n14_mpmath", "0.1", "100000000000000", "10000000000000.0"),
+    gmpy2TestSuite("py_n14_gmpy2", "0.1", "100000000000000", "10000000000000.0", precision_conf=128),
+    decimalTestSuite("py_n26_decimal", "0.1", "100000000000000000000000000", "10000000000000000000000000"),
+    mpmathTestSuite("py_n26_mpmath", "0.1", "100000000000000000000000000", "10000000000000000000000000.0"),
+    gmpy2TestSuite("py_n26_gmpy2", "0.1", "100000000000000000000000000", "10000000000000000000000000.0", precision_conf=128),
+]
 
 # Save results to JSON
 with open(f"python_benchmark_{ITERATIONS}.json", "w") as f:

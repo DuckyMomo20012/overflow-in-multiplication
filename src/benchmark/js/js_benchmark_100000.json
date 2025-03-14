@@ -1,44 +1,58 @@
-{
-  "js_big_decimal": {
+[
+  {
+    "label": "js_big_decimal",
     "result": "121932631356500531591068431581771069347203169112635269",
     "expected": "121932631356500531591068431581771069347203169112635269",
-    "time": 52633507,
+    "time": 62333617,
     "iterations": 100000,
     "isMatch": true
   },
-  "js_big_100_decimal": {
+  {
+    "label": "js_big_100_decimal",
     "result": "121932631356500531591068431581771069347203169112635269",
     "expected": "121932631356500531591068431581771069347203169112635269",
-    "time": 55885239,
-    "iterations": 100,
+    "time": 55821254,
+    "iterations": 100000,
     "isMatch": true
   },
-  "js_n14_decimal": {
+  {
+    "label": "js_big_decimal",
+    "result": "121932631356500531591068431581771069347203169112635269",
+    "expected": "121932631356500531591068431581771069347203169112635269",
+    "time": 50895428,
+    "iterations": 100000,
+    "isMatch": true
+  },
+  {
+    "label": "js_n14_decimal",
     "result": "10000000000000",
     "expected": "10000000000000",
-    "time": 45879304,
+    "time": 46910856,
     "iterations": 100000,
     "isMatch": true
   },
-  "js_n14_bignumber": {
+  {
+    "label": "js_n14_bignumber",
     "result": "10000000000000",
     "expected": "10000000000000",
-    "time": 50408970,
+    "time": 49352037,
     "iterations": 100000,
     "isMatch": true
   },
-  "js_n26_decimal": {
+  {
+    "label": "js_n26_decimal",
     "result": "10000000000000000000000000",
     "expected": "10000000000000000000000000",
-    "time": 50600406,
+    "time": 50698222,
     "iterations": 100000,
     "isMatch": true
   },
-  "js_n26_bignumber": {
+  {
+    "label": "js_n26_bignumber",
     "result": "10000000000000000000000000",
     "expected": "10000000000000000000000000",
-    "time": 52045068,
+    "time": 51704299,
     "iterations": 100000,
     "isMatch": true
   }
-}
+]

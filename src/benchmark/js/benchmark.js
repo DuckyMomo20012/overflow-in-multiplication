@@ -12,13 +12,14 @@ function benchmark(func, iter = ITERATIONS) {
   return Number(end - start); // Convert BigInt to number (nanoseconds)
 }
 
-function test(input, expected, func, iter = ITERATIONS) {
+function test(label, input, expected, func, iter = ITERATIONS) {
   const res = func(input);
   if (res !== expected) {
     console.error(`Error: expected ${expected}, but got ${res}`);
   }
 
   return {
+    label: label,
     result: res,
     expected: expected,
     time: benchmark(() => func(input, iter)),
@@ -28,6 +29,7 @@ function test(input, expected, func, iter = ITERATIONS) {
 }
 
 const decimalTestSuite = (
+  label,
   x,
   n,
   expected,
@@ -37,12 +39,19 @@ const decimalTestSuite = (
   Decimal.precision = precision_conf;
 
   const input = { x: new Decimal(x), n: new Decimal(n) };
-  return test(input, expected, (input) => input.x.mul(input.n).toFixed(), iter);
+  return test(
+    label,
+    input,
+    expected,
+    (input) => input.x.mul(input.n).toFixed(),
+    iter
+  );
 };
 
-const bigNumberTestSuite = (x, n, expected, iter = ITERATIONS) => {
+const bigNumberTestSuite = (label, x, n, expected, iter = ITERATIONS) => {
   const input = { x: new BigNumber(x), n: new BigNumber(n) };
   return test(
+    label,
     input,
     expected,
     (input) => input.x.times(input.n).toFixed(),
@@ -50,40 +59,52 @@ const bigNumberTestSuite = (x, n, expected, iter = ITERATIONS) => {
   );
 };
 
-const testcases = {
-  js_big_decimal: decimalTestSuite(
+const testcases = [
+  decimalTestSuite(
+    "js_big_decimal",
     "987654321987654321987654321",
     "123456789123456789123456789",
     "121932631356500531591068431581771069347203169112635269"
   ),
-  js_big_100_decimal: decimalTestSuite(
+  decimalTestSuite(
+    "js_big_100_decimal",
     "987654321987654321987654321",
     "123456789123456789123456789",
     "121932631356500531591068431581771069347203169112635269",
+    undefined,
     100
   ),
-  js_big_decimal: bigNumberTestSuite(
+  bigNumberTestSuite(
+    "js_big_decimal",
     "987654321987654321987654321",
     "123456789123456789123456789",
     "121932631356500531591068431581771069347203169112635269"
   ),
-  js_n14_decimal: decimalTestSuite("0.1", "100000000000000", "10000000000000"),
-  js_n14_bignumber: bigNumberTestSuite(
+  decimalTestSuite(
+    "js_n14_decimal",
     "0.1",
     "100000000000000",
     "10000000000000"
   ),
-  js_n26_decimal: decimalTestSuite(
+  bigNumberTestSuite(
+    "js_n14_bignumber",
+    "0.1",
+    "100000000000000",
+    "10000000000000"
+  ),
+  decimalTestSuite(
+    "js_n26_decimal",
     "0.1",
     "100000000000000000000000000",
     "10000000000000000000000000"
   ),
-  js_n26_bignumber: bigNumberTestSuite(
+  bigNumberTestSuite(
+    "js_n26_bignumber",
     "0.1",
     "100000000000000000000000000",
     "10000000000000000000000000"
   ),
-};
+];
 
 // Save results in nanoseconds
 writeFileSync(

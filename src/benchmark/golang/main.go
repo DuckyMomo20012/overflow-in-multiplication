@@ -13,6 +13,7 @@ import (
 var ITERATIONS int = 100000
 
 type TestResult struct {
+	Label      string `json:"label"`
 	Result     any    `json:"result"`
 	Expected   string `json:"expected"`
 	Time       int64  `json:"time"`
@@ -38,7 +39,7 @@ func benchmark(function func() any, iter int) int64 {
 	return time.Since(start).Nanoseconds() // Return nanoseconds as integer
 }
 
-func test[T any](input T, expect string, function func(input T) any, iter int) TestResult {
+func test[T any](label string, input T, expect string, function func(input T) any, iter int) TestResult {
 	result := function(input)
 
 	if result != expect {
@@ -46,6 +47,7 @@ func test[T any](input T, expect string, function func(input T) any, iter int) T
 	}
 
 	return TestResult{
+		Label:      label,
 		Result:     result,
 		Expected:   expect,
 		Time:       benchmark(func() any { return function(input) }, iter),
@@ -54,7 +56,7 @@ func test[T any](input T, expect string, function func(input T) any, iter int) T
 	}
 }
 
-func shopTestSuite(x, n, expected string, iter *int) TestResult {
+func shopTestSuite(label, x, n, expected string, iter *int) TestResult {
 	if iter == nil {
 		iter = &ITERATIONS
 	}
@@ -63,12 +65,12 @@ func shopTestSuite(x, n, expected string, iter *int) TestResult {
 		X: shopDecimal.RequireFromString(x),
 		N: shopDecimal.RequireFromString(n),
 	}
-	return test(input, expected, func(input TestInputShop) any {
+	return test(label, input, expected, func(input TestInputShop) any {
 		return input.X.Mul(input.N).String()
 	}, *iter)
 }
 
-func ericTestSuite(x, n, expected string, iter *int, precision_conf *int) TestResult {
+func ericTestSuite(label, x, n, expected string, iter *int, precision_conf *int) TestResult {
 	if iter == nil {
 		iter = &ITERATIONS
 	}
@@ -92,7 +94,7 @@ func ericTestSuite(x, n, expected string, iter *int, precision_conf *int) TestRe
 		N: ericN,
 	}
 
-	return test(input, expected, func(input TestInputEric) any {
+	return test(label, input, expected, func(input TestInputEric) any {
 		return fmt.Sprintf("%f", ericRes.Mul(input.X, input.N))
 	}, *iter)
 }
@@ -100,14 +102,14 @@ func ericTestSuite(x, n, expected string, iter *int, precision_conf *int) TestRe
 func main() {
 	precisionTest := 100
 
-	testcases := map[string]TestResult{
-		"go_big_shop":     shopTestSuite("987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269", nil),
-		"go_big_eric":     ericTestSuite("987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269", nil, nil),
-		"go_big_100_eric": ericTestSuite("987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269", nil, &precisionTest),
-		"go_n14_shop":     shopTestSuite("0.1", "100000000000000", "10000000000000", nil),
-		"go_n14_eric":     ericTestSuite("0.1", "100000000000000", "10000000000000.0", nil, nil),
-		"go_n26_shop":     shopTestSuite("0.1", "100000000000000000000000000", "10000000000000000000000000", nil),
-		"go_n26_eric":     ericTestSuite("0.1", "100000000000000000000000000", "10000000000000000000000000.0", nil, nil),
+	testcases := []TestResult{
+		shopTestSuite("go_big_shop", "987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269", nil),
+		ericTestSuite("go_big_eric", "987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269", nil, nil),
+		ericTestSuite("go_big_100_eric", "987654321987654321987654321", "123456789123456789123456789", "121932631356500531591068431581771069347203169112635269", nil, &precisionTest),
+		shopTestSuite("go_n14_shop", "0.1", "100000000000000", "10000000000000", nil),
+		ericTestSuite("go_n14_eric", "0.1", "100000000000000", "10000000000000.0", nil, nil),
+		shopTestSuite("go_n26_shop", "0.1", "100000000000000000000000000", "10000000000000000000000000", nil),
+		ericTestSuite("go_n26_eric", "0.1", "100000000000000000000000000", "10000000000000000000000000.0", nil, nil),
 	}
 
 	// Save as JSON (with numeric values)
