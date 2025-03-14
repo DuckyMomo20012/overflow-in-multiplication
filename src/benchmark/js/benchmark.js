@@ -12,16 +12,85 @@ function benchmark(func) {
   return Number(end - start); // Convert BigInt to number (nanoseconds)
 }
 
-// Setup test numbers
-const a = new Decimal("12345.6789");
-const b = new Decimal("98765.4321");
+function test(input, expected, func) {
+  const res = func(input);
+  if (res !== expected) {
+    console.error(`Error: expected ${expected}, but got ${res}`);
+  }
 
-// Run benchmarks
-const results = {
-  "decimal.js": benchmark(() => a.mul(b)),
-  "bignumber.js": benchmark(() => new BigNumber(a).times(b)),
+  return {
+    result: res,
+    time: benchmark(() => func(input)),
+    expected: expected,
+  };
+}
+
+const testcases = {
+  n12_decimal: test(
+    { x: new Decimal("0.1"), n: new Decimal("1000000000000") },
+    "100000000000",
+    (input) => input.x.mul(input.n).toFixed()
+  ),
+  n13_decimal: test(
+    { x: new Decimal("0.1"), n: new Decimal("10000000000000") },
+    "1000000000000",
+    (input) => input.x.mul(input.n).toFixed()
+  ),
+  n14_decimal: test(
+    { x: new Decimal("0.1"), n: new Decimal("100000000000000") },
+    "10000000000000",
+    (input) => input.x.mul(input.n).toFixed()
+  ),
+  n24_decimal: test(
+    { x: new Decimal("0.1"), n: new Decimal("1000000000000000000000000") },
+    "100000000000000000000000",
+    (input) => input.x.mul(input.n).toFixed()
+  ),
+  n25_decimal: test(
+    { x: new Decimal("0.1"), n: new Decimal("10000000000000000000000000") },
+    "1000000000000000000000000",
+    (input) => input.x.mul(input.n).toFixed()
+  ),
+  n26_decimal: test(
+    { x: new Decimal("0.1"), n: new Decimal("100000000000000000000000000") },
+    "10000000000000000000000000",
+    (input) => input.x.mul(input.n).toFixed()
+  ),
+  n12_bignumber: test(
+    { x: new BigNumber("0.1"), n: new BigNumber("1000000000000") },
+    "100000000000",
+    (input) => input.x.times(input.n).toFixed()
+  ),
+  n13_bignumber: test(
+    { x: new BigNumber("0.1"), n: new BigNumber("10000000000000") },
+    "1000000000000",
+    (input) => input.x.times(input.n).toFixed()
+  ),
+  n14_bignumber: test(
+    { x: new BigNumber("0.1"), n: new BigNumber("100000000000000") },
+    "10000000000000",
+    (input) => input.x.times(input.n).toFixed()
+  ),
+  n24_bignumber: test(
+    { x: new BigNumber("0.1"), n: new BigNumber("1000000000000000000000000") },
+    "100000000000000000000000",
+    (input) => input.x.times(input.n).toFixed()
+  ),
+  n25_bignumber: test(
+    { x: new BigNumber("0.1"), n: new BigNumber("10000000000000000000000000") },
+    "1000000000000000000000000",
+    (input) => input.x.times(input.n).toFixed()
+  ),
+  n26_bignumber: test(
+    {
+      x: new BigNumber("0.1"),
+      n: new BigNumber("100000000000000000000000000"),
+    },
+    "10000000000000000000000000",
+    (input) => input.x.times(input.n).toFixed()
+  ),
 };
 
 // Save results in nanoseconds
-writeFileSync("js_benchmark.json", JSON.stringify(results, null, 2));
+writeFileSync("js_benchmark.json", JSON.stringify(testcases, null, 2));
 console.log("JavaScript benchmark saved to js_benchmark.json");
