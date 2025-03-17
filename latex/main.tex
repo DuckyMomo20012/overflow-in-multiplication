@@ -1,69 +1,41 @@
-\documentclass{article}
-\usepackage{amsmath}
+\documentclass[9pt]{extarticle} % Giữ font nhỏ
 \usepackage[utf8]{vietnam}
-\usepackage{graphicx} % Required for inserting images
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{lscape}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{subfig} % Thêm để hỗ trợ \subfloat
+\usepackage{hyperref} % Thêm để hỗ trợ \href
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+\geometry{a4paper, margin=1in}
 
-\title{Lỗ hổng nguyên khi tính toán phép cộng}
-\author{Nhóm 5}
-\date{March 2025}
+% Tùy chỉnh kích thước font cho \section và \subsection
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{} % ~14pt
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{} % ~12pt
+\titlespacing*{\section}{0pt}{1em}{0.5em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.4em}
 
 \begin{document}
+    \input{cover}
+    \vspace{1cm}
 
-\maketitle
-\section{IEEE 754}
+    \LARGE\textbf{Bài làm}
 
+    \input{cauA}
 
-\section{Các ví dụ về sai lệch về tính toán số nguyên đối với các ngôn ngữ lập trình}
+    \input{cauB}
 
-\subsection{\(0.1 + 0.2 \neq 0.3\)}
-
-Khi chạy đoạn mã sau trong Python:
-\begin{verbatim}
-print(0.1 + 0.2)  # Output: 0.30000000000000004
-print(0.1 + 0.2 == 0.3)  # Output: False
-\end{verbatim}
-ta thấy kết quả không đúng như mong đợi. Nguyên nhân của sai lệch này nằm ở cách máy tính \textbf{biểu diễn số thực} theo chuẩn IEEE 754.
-
-\subsubsection{Biểu diễn số thập phân dưới dạng nhị phân}
-
-Máy tính lưu số thực dưới dạng chuỗi bit nhị phân, nhưng không phải tất cả số thập phân đều có thể được biểu diễn chính xác. Ví dụ:
-
-\begin{itemize}
-    \item \(0.1_{10}\) trong hệ nhị phân:
-    \[
-    0.0001100110011001100110011001100110..._2
-    \text{ (vô hạn)}
-    \]
-    \item \(0.2_{10}\) trong hệ nhị phân:
-    \[
-    0.00110011001100110011001100110011..._2
-    \text{ (vô hạn)}
-    \]
-\end{itemize}
-
-Do số bit có giới hạn (64-bit cho kiểu \texttt{double}), nên máy tính phải làm tròn số, dẫn đến sai số.
-
-\subsubsection{Thực hiện phép cộng trong IEEE 754}
-
-Khi cộng \(0.1 + 0.2\), máy tính thực hiện phép cộng trên các giá trị đã bị làm tròn:
-
-\[
-0.0001100110011001100110011001100110..._2 + 0.00110011001100110011001100110011..._2
-\]
-
-Kết quả sau khi làm tròn:
-
-\[
-0.30000000000000004
-\]
-
-Do đó, khi so sánh:
-
-\begin{verbatim}
-print(0.1 + 0.2 == 0.3)  # False
-\end{verbatim}
-
-
-
-\section{}
+    \input{cauC}
+    \input{cauC_2}
 \end{document}

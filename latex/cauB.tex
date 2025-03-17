@@ -1,0 +1,115 @@
+\section{Cài đặt thuật toán lũy thừa nhanh và chạy thử ra kết quả
+đúng cho 3 ví dụ trên)}
+\subsection{Thuật toán nhân truyền thống}
+\begin{verbatim}
+def linear_multiply(x, n):
+    """
+    Multiply a number by n using repeated addition.
+    Time complexity: O(n)
+    """
+    result = 0
+    for _ in range(n):
+        result += x
+    return result
+\end{verbatim}
+
+Phép nhân $x \cdot n$ được hiểu là việc cộng số $x$ với chính nó $n$ lần. Ví dụ, $5 \cdot 3$ được tính bằng cách lấy $5 + 5 + 5 = 15$.
+
+\subsubsection{}{Các bước thực hiện}
+Hàm \texttt{linear\_multiply} triển khai nguyên lý này một cách trực tiếp:
+\begin{enumerate}
+    \item Khởi tạo biến \texttt{result = 0} để lưu trữ kết quả phép nhân
+    \item Sử dụng vòng lặp for trong Python để lặp đúng $n$ lần
+    \item Trong mỗi vòng lặp, cộng giá trị $a$ vào biến result: \texttt{result += x}
+    \item Sau khi hoàn thành $n$ vòng lặp, kết quả cuối cùng chính là $x \cdot n$
+\end{enumerate}
+\subsubsection{Độ phức tạp thuật toán}
+Thuật toán này có độ phức tạp $O(n)$ vì:
+\begin{itemize}
+   \item Số lần lặp tỷ lệ thuận với giá trị của $n$
+   \item Khi $n$ tăng lên gấp đôi, thời gian thực hiện cũng tăng gấp đôi
+   \item Mỗi vòng lặp chỉ thực hiện một phép cộng đơn giản $O(1)$
+\end{itemize}
+Điều này làm cho thuật toán trở nên kém hiệu quả với các giá trị $n$ lớn, nhưng minh họa rõ ràng mối liên hệ giữa phép nhân và phép cộng lặp lại trong toán học cơ bản.
+
+\subsection{Thuật toán nhân nhanh}
+\begin{verbatim}
+def fast_multiply(x, binary_n):
+    """
+    Multiply x number by n using binary multiplication 
+    technique.
+    Time complexity: O(log(n))
+    
+    Parameters:
+    x: number to multiply
+    binary_n: string of '0's and '1's representing n in
+    binary
+    """
+    result = 0
+    
+    # Get index for processing from right to left
+    idx = len(binary_n) - 1
+    
+    # Process binary digits from right to left 
+    while idx >= 0:
+        bit = binary_n[idx]
+        if bit == '1':
+            result += x
+        x += x  # Double x for next bit position
+        idx -= 1
+    return result
+\end{verbatim}
+\subsubsection{Nguyên lý hoạt động của thuật toán}
+
+Thuật toán này tận dụng biểu diễn nhị phân của số nguyên để thực hiện phép nhân hiệu quả. Thay vì cộng số $x$ với chính nó $n$ lần như phương pháp nhân O(n), phương pháp này xử lý từng bit của số $n$  và thực hiện các bước tương ứng.
+
+\subsubsection{Các bước thực hiện}
+
+Khi thực hiện \texttt{fast\_multiply}, thuật toán hoạt động như sau:
+
+\begin{enumerate}[label=\alph*)]
+    \item Khởi tạo biến \texttt{result = 0} để lưu trữ kết quả phép nhân và chuyển $n$ sang dạng binary: \texttt{binary\_n} 
+    \item Trong khi \texttt{len(binary\_n) >= 0}, thuật toán:
+        \begin{enumerate}[label=b\arabic*)]
+            \item Kiểm tra bit cuối cùng của $n$
+            \item Nếu bit là 1, cộng giá trị hiện tại của $x$ vào $result$
+            \item Nếu bit là 0, không cộng giá trị hiện tại của $x$ vào $result$
+            \item Nhân đôi giá trị của $x$ (tương đương với phép dịch trái một bit)
+        \end{enumerate}
+\end{enumerate}
+
+\noindent Về bản chất, thuật toán này cộng $x \cdot 2^i$ vào kết quả cho mỗi vị trí bit thứ $i$ mà bit trong $n$ là 1.
+
+\noindent Giải thích: Khi một số nguyên $n$ được biểu diễn trong hệ nhị phân, mỗi bit đại diện cho một lũy thừa của 2. Ví dụ, số $n=13$ được biểu diễn là $1101_2$, có nghĩa là:
+\begin{align*}
+13 = 1 \cdot 2^3 + 1 \cdot 2^2 + 0 \cdot 2^1 + 1 \cdot 2^0 
+\end{align*}
+Khi nhân $x$ với $n$, chúng ta có thể viết: 
+\begin{align*}
+x \cdot n &= x \cdot 13 = x \cdot (1 \cdot 2^3 + 1 \cdot 2^2 + 0 \times 2^1 + 1 \cdot 2^0) \\
+&= x \cdot 1 \cdot 2^3 + x \cdot 1 \cdot 2^2 + x \cdot 0 \cdot 2^1 + x \cdot 1 \cdot 2^0
+\end{align*}
+\noindent Do đó, chỉ có những bit là 1 mới cần cộng vào kết quả
+\section{Độ phức tạp thuật toán}
+Phương pháp này có độ phức tạp thời gian là \( O(\log n) \) vì:
+\begin{enumerate}
+    \item Vòng lặp chính chạy theo số bit trong biểu diễn nhị phân của \( n \).
+    \item Một số nguyên \( n \) có khoảng \( \log_2(n) \) bit trong biểu diễn nhị phân của nó. \\
+    Chứng minh: 
+
+    Nếu có $m$ bit, sẽ biểu diễn được các số từ $0$ đến $2^m - 1$ trong hệ nhị phân (do mỗi bit có 2 trạng thái là 0 và 1, do đó m bit sẽ là $2^m$ trạng thái). Do đó, nếu biểu diễn một số $n$ trong hệ nhị phân cần một số lượng bit $m$ sao cho:
+    
+    \[
+    2^m - 1 \geq n
+    \]
+    
+    hay tương đương với:
+    
+    \[
+    m \geq \log_2 (n + 1).
+    \]
+    Khi $n$ đủ lớn, số lượng bit m cần để biểu diễn n là   \[m \geq \log_2 (n + 1) \approx \log_2 (n) \] \\
+    Vậy một số nguyên \( n \) có khoảng \( \log_2(n) \) bit trong biểu diễn nhị phân của nó.
+
+    \item Do có khoảng \( \log_2(n) \) bit trong biểu diễn nhị phân của \( n \), thuật toán sẽ lặp \( \log_2(n) \) lần.
+    \end{enumerate}

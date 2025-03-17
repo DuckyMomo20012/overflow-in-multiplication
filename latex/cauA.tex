@@ -1,0 +1,170 @@
+\section{Biểu diễn số thực theo chuẩn IEEE 754}
+\subsection{Giới thiệu}
+Chuẩn IEEE 754 (IEEE Standard for Floating-Point Arithmetic) là một tiêu chuẩn quốc tế được sử dụng để biểu diễn số thực trong máy tính, cho phép thực hiện các phép tính số học chính xác và hiệu quả. Tiêu chuẩn này bao gồm nhiều định dạng, trong đó phổ biến nhất là \textbf{binary32} (single precision) và \textbf{binary64} (double precision).
+
+\subsection{Cấu Trúc Dữ Liệu}
+Một số thực trong IEEE 754 được biểu diễn theo công thức:
+
+\[
+x = (-1)^{\text{Sign}} \times (1.\text{Mantissa}) \times 2^{(\text{Exponent} - \text{Bias})}
+\]
+
+Các thành phần bao gồm:
+
+\begin{itemize}
+    \item \textbf{Bit dấu (Sign)}: 1 bit, biểu diễn dấu của số (0 là số dương, 1 là số âm).
+    \item \textbf{Số mũ (Exponent)}: 8 bit đối với binary32 hoặc 11 bit đối với binary64. Số mũ được mã hóa theo dạng bù (biased exponent).
+    \item \textbf{Phần định trị (Mantissa/Fraction)}: 23 bit (binary32) hoặc 52 bit (binary64), lưu trữ phần thập phân của số được chuẩn hóa.
+
+    \item \textbf{Giá Trị Bù (Bias)}
+Giá trị bù được sử dụng để dịch chuyển số mũ sang miền dương, giúp biểu diễn cả số mũ dương và âm. Công thức tính:
+
+\[
+\text{Bias} = 2^{n-1} - 1
+\]
+
+Trong đó \(n\) là số bit của phần số mũ. Cụ thể:
+
+\begin{itemize}
+    \item Đối với binary32: \(Bias = 127\).
+    \item Đối với binary64: \(Bias = 1023\).
+\end{itemize}
+\end{itemize}
+
+\subsection{Ví Dụ Minh Họa}
+Biểu diễn số \(-10.75\) theo chuẩn IEEE 754 (binary32):
+
+Bước 1: Chuyển sang nhị phân
+\[
+-10.75 = -(1010.11)_2
+\]
+
+Bước 2: Chuẩn hóa
+\[
+- (1.01011)_2 \times 2^3
+\]
+
+Bước 3: Mã hóa số mũ
+\[
+\text{Exponent} = 3 + 127 = 130 = (10000010)_2
+\]
+
+Bước 4: Mã hóa phần Mantissa
+Loại bỏ phần \(1.\), ta được:
+
+\[
+01011000000000000000000
+\]
+
+Bước 5: Kết quả cuối cùng
+\[
+1\ 10000010\ 01011000000000000000000
+\]
+
+
+\section{3 trường hợp (x, n) có thể xác định rõ giá trị $x \times n$ bằng cách tính trên giấy ra kết quả chính xác nhưng tính bằng phép nhân của ngôn ngữ lập trình có kết quả sai lệch đáng kể}
+
+\textbf{Các Trường Hợp Sai Số}
+
+Bảng số liệu dưới đây trình bày ba trường hợp mà kết quả tính toán bằng phép nhân của ngôn ngữ lập trình có sai lệch đáng kể so với giá trị đúng cho kiểu dữ liệu \texttt{float} (32 bit):
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$x$ & $n$ & Giá trị kỳ vọng & Giá trị thực tế \\
+\hline
+0.1 & $10^{12}$ & $10^{11}$ & 99,999,997,952 \\
+0.1 & $10^{13}$ & $10^{12}$ & 999,999,995,904 \\
+0.1 & $10^{14}$ & $10^{13}$ & 9,999,999,827,968 \\
+\hline
+\end{tabular}
+\end{center}
+
+
+Tương tự như trên, bảng số liệu dưới đây chỉ ra ba trường hợp mà kết quả tính toán bằng phép nhân của ngôn ngữ lập trình có sai lệch đáng kể so với giá trị đúng cho kiểu dữ liệu \texttt{double} (64 bit):
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+$x$ & $n$ & Giá trị kỳ vọng & Giá trị thực tế \\
+\hline
+0.1 & $10^{24}$ & $10^{23}$ & 100,000,000,000,000,008,388,608 \\
+0.1 & $10^{25}$ & $10^{24}$ & 1,000,000,000,000,000,117,440,512 \\
+0.1 & $10^{26}$ & $10^{25}$ & 10,000,000,000,000,000,905,969,664 \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Nhận xét:}
+\begin{itemize}
+    \item Sai số xảy ra khi giá trị n rất lớn
+    \item Giá trị n càng lớn thì sai số càng ấn tượng
+\end{itemize}
+
+\textbf{Lý giải sai số} 
+
+Ta xét trường hợp data type là \texttt{double} (64 bit) với x = 0.1 và n = 1,000,000,000,000,000,000,000,000. Các trường hợp khác có thể được chứng minh tương tự. 
+ 
+Như đã được nêu ở phần giới thiệu về tiêu chuẩn IEEE 754, data type \texttt{double} (64 bit) có cấu trúc bit như sau:
+\begin{itemize}
+    \item 1 bit dấu (sign bit)
+    \item 11 bit số mũ (exponent)
+    \item 52 bit phần thập phân (mantisa)
+\end{itemize}
+
+Khi chuyển đổi x (0.1) sang dạng nhị phân, ta nhận thấy không thể biểu diễn chính xác giá trị của x với hữu hạn số bit:
+\[00111111\, 10111001\, 10011001\, 10011001\,\]
+\[10011001\, 10011001\, 10011001\, 10011001 ...\]
+
+Do số \texttt{double} chỉ có thể lưu trữ tối đa 52 bit phần thập phân nên phần dư bị làm tròn, gây ra sai số. 
+
+\[00111111\, 10111001\, 10011001\, 10011001\,\]
+\[10011001\, 10011001\, 10011001\, 10011010\]
+
+Khi chuyển về dạng thập phân (base-10), số nhị phân trên sẽ có giá trị là:
+\[
+1.00000000000000005551115123126 \times E^{-1}
+\]
+
+Ta thấy được giá trị này không còn bằng chính xác 0.1 nữa.
+Tiếp tục với. n = 1,000,000,000,000,000,000,000,000 chuyển sang dạng nhị phân đầy đủ sẽ là:
+\[11010011\, 11000010\, 00011011\, 11001110\, 11001100\,\]
+\[11101101\, 10100001\, 00000000\, 00000000\, 00000000\]
+
+Để lưu trữ n như một số \texttt{double}, cần chuyển n về \\
+dạng $1.(mantisa)^{(exponent)}$:
+\[
+1.1010011110000100001101111001110110011001110110110100001 \times 2^{79}
+\]
+
+Phần thập phân của n có độ dài 79 bit. Vì số \texttt{double} chỉ có thể chứa tối đa 52 bit thập phân, phần thập phân của n sẽ được làm tròn và lược bỏ số bit dư. n khi được lưu trữ bằng \texttt{double} (64 bit) sẽ có dạng nhị phân như sau:
+\[01000100\, 11101010\, 01111000\, 01000011\,\]
+\[01111001\, 11011001\, 10011101\, 10110100\]
+
+Khi chuyển giá trị trên về lại thập phân, sẽ có giá trị:
+\[
+9.99999999999999983222784 \times E^{23}
+\]
+
+Nhân x và n lại với nhau, ta được giá trị:
+\[
+100,000,000,000,000,003,873,393.523125999906867742538448502784
+\]
+
+Giá trị này cũng sẽ được tự động làm tròn khi lưu trữ bằng số \texttt{double}. Giá trị nhi phân sau sau khi làm tròn và sẵn sàng lưu trữ như một số \texttt{double} là:
+\[01000100\, 10110101\, 00101101\, 00000010\,\]
+\[11000111\, 11100001\, 01001010\, 11110111\]
+
+Khi chuyển giá trị nhị phân trên về lại thập phân, sẽ có giá trị:
+\[
+ 1.00000000000000008388608 \times E^{23} = 100,000,000,000,000,008,388,608
+\]
+
+Đây là kết quả mà phép nhân của ngôn ngữ lập trình trả về! 
+
+\textbf{Kết luận:}
+
+\begin{itemize}
+    \item Data type \texttt{float} và \texttt{double} không thích hợp để biểu diễn giá trị lớn vì hạn chế của tiêu chuẩn IEEE 754
+    \item Cần lưu ý về khả năng sai số khi nhân hai số \texttt{double} giá trị lớn, dù kết quả cho ra không bị overflow.
+\end{itemize}
